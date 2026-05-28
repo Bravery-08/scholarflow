@@ -1,0 +1,24 @@
+# Environment
+.env
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Model files (too large for git)
+*.bin
+*.safetensors
+*.gguf
+outputs/
+*.pt
+
+# Database volumes
+pgdata/
+chromadata/
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
