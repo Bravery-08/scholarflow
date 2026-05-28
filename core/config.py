@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     postgres_password: str
     postgres_db: str
     postgres_url: str
+    postgres_url_local: str = ""
 
     # Redis
     redis_url: str
@@ -35,6 +36,7 @@ class Settings(BaseSettings):
     # Chroma
     chroma_host: str
     chroma_port: int
+    chroma_host_local: str = "localhost"
 
     # JWT
     secret_key: str
