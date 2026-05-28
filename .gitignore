@@ -22,3 +22,8 @@ chromadata/
 
 # OS
 .DS_Store
+
+data/figures/*.png
+data/figures/*.jpg
+*.pdf
+data/pdfs/

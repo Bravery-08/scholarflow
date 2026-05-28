@@ -2,6 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sess
 from sqlalchemy import create_engine
 from core.config import settings
 from db.models import Base
+from sqlalchemy.orm import sessionmaker, Session
+from contextlib import contextmanager
 
 
 def _make_async_url(base_url: str) -> str:
@@ -69,3 +71,29 @@ async def init_db():
 
 def get_sync_engine():
     return create_engine(settings.postgres_url_local, echo=False)
+
+# ── Sync sessions (for Dramatiq workers and local scripts) ───────────────────
+
+def _make_sync_engine(url: str):
+    return create_engine(url, echo=settings.debug, pool_pre_ping=True)
+
+@contextmanager
+def get_sync_session(local: bool = False):
+    """
+    Context manager yielding a sync SQLAlchemy session.
+    local=True  → uses localhost (scripts on your machine)
+    local=False → uses Docker service name (Dramatiq workers in containers)
+    """
+    url = settings.postgres_url_local if local else settings.postgres_url
+    engine = _make_sync_engine(url)
+    SessionFactory = sessionmaker(bind=engine, expire_on_commit=False)
+    session = SessionFactory()
+    try:
+        yield session
+        session.commit()
+    except Exception:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+        engine.dispose()

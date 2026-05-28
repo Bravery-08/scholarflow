@@ -39,7 +39,8 @@ slowapi==0.1.9
 
 # PDF processing
 pdfplumber==0.11.2
-pdf2image==1.17.0
+pymupdf==1.24.9
+arxiv==2.1.3
 arxiv==2.1.3
 requests==2.32.3
 Pillow==10.4.0
@@ -49,7 +50,7 @@ ragas==0.1.21
 
 # ML / Fine-tuning (used in Phase 5 on Colab, listed here for completeness)
 torch==2.3.1
-transformers==4.43.4
+transformers>=4.51.0,<5.0.0
 peft==0.11.1
 bitsandbytes==0.43.3
 trl==0.9.6
