@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     orchestrator_model: str
     ollama_base_url: str
     finetuned_model_id: str = ""
+    embedding_model: str = "microsoft/harrier-oss-v1-0.6b"
 
     # PostgreSQL
     postgres_user: str
